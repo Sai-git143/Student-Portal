@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+</head>
+<body>
+    <h1>Welcome!</h1>
+    <div id="userDetails"></div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const name = decodeURIComponent(urlParams.get('name')) || 'Guest'; // Default to 'Guest' if null
+        const email = decodeURIComponent(urlParams.get('email')) || ''; // Default to empty string if null
+        const address = decodeURIComponent(urlParams.get('address')) || ''; // Default to empty string if null
+        const number = decodeURIComponent(urlParams.get('number')) || ''; // Default to empty string if null
+
+        const userDetailsDiv = document.getElementById('userDetails');
+        if (name !== 'Guest') { // Only display details if name is not the default
+            userDetailsDiv.innerHTML = `
+                <p>Name: ${name}</p>
+                <p>Email: ${email}</p>
+                <p>Address: ${address}</p>
+                <p>Number: ${number}</p>
+            `;
+        } else {
+            userDetailsDiv.innerHTML = "<p>Please log in to see your details.</p>";
+        }
+    </script>
+</body>
+</html>

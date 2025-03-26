@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+    <script src="script.js" defer></script> </head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <h1>Login</h1>
+            <form id="loginForm" action="/login" method="POST">
+                <div class="form-group">
+                    <label for="lmail">Email:</label>
+                    <input type="email" id="lmail" name="lmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="lpassword">Password:</label>
+                    <input type="password" id="lpassword" name="lpassword" required>
+                </div>
+                <div id="errorMessage" class="error-message"></div>
+                <button type="submit">Login</button>
+                <p><a href="/signup">Don't have an account?</a></p>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    const loginForm = document.getElementById('loginForm');
+const errorMessage = document.getElementById('errorMessage');
+const body = document.body;
+
+loginForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    errorMessage.textContent = '';
+    errorMessage.style.display = 'none';
+
+    const formData = new FormData(loginForm);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+            const redirectUrl = await response.text(); // Get the redirect URL from the response body
+                    window.location.href = redirectUrl; // Redirect to the URL
+        } else {
+            const errorMessageText = await response.text();
+            errorMessage.textContent = errorMessageText;
+            errorMessage.style.display = 'block';
+            // Add dynamic background color change here
+            body.style.background = getRandomBackgroundColor();
+        }
+    } catch (error) {
+        console.error('Login error:', error);
+        errorMessage.textContent = 'An error occurred during login.';
+        errorMessage.style.display = 'block';
+        body.style.background = getRandomBackgroundColor();
+    }
+});
+
+function getRandomBackgroundColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+</script>

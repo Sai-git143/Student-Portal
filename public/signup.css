@@ -1,0 +1,85 @@
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f3f3f3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 450px;
+    max-width: 90%;
+    border: 5px solid #f0c14b; /* Added yellow border */
+}
+
+
+h1{
+    text-align: center;
+    margin-bottom: 30px;
+    color: #232f3e; /* Dark gray */
+    font-weight: 600;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+input[type="submit"] {
+    background-color: #f0c14b; /* Amazon-like yellow */
+    color: #232f3e; /* Dark gray */
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #e6b83f; /* Slightly darker yellow on hover */
+}
+
+.error-message {
+    color: #c0392b; /* Red error message */
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+a {
+    color: #232f3e; /* Dark gray */
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 450px) {
+    .container {
+        width: 90%;
+    }
+}

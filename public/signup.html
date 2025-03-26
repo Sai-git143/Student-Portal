@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+    <style>
+        .error-message {
+            color: red;
+            display: none;
+        }
+    </style>
+        <link rel="stylesheet" href="signup.css">
+
+</head>
+<body>
+    <div class="container">
+    <h1 style="margin-top: 0%;">Signup</h1>
+    <hr/>
+    <br>
+    <form id="signupForm">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br>
+        <div id="emailErrorMessage" class="error-message"></div>
+
+        <label for="address">Address:</label><br>
+        <input type="text" id="address" name="address" required><br>
+
+        <label for="number">Number:</label><br>
+        <input type="text" id="number" name="number" required><br>
+
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required
+               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}"
+               title="Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character.">
+        <div id="passwordErrorMessage" class="error-message"></div>
+
+        <label for="cpassword">Confirm Password:</label><br>
+        <input type="password" id="cpassword" name="cpassword" required><br>
+        <div id="cpasswordErrorMessage" class="error-message"></div>
+
+
+        <input type="submit" value="Signup">
+        <p>Already a user? <a href="login.html">Login here</a></p>  <!-- Added hyperlink -->
+
+    </form>
+    </div>
+    
+    <script>
+        const signupForm = document.getElementById('signupForm');
+        const emailErrorMessage = document.getElementById('emailErrorMessage');
+        const passwordErrorMessage = document.getElementById('passwordErrorMessage');
+        const cpasswordErrorMessage = document.getElementById('cpasswordErrorMessage');
+
+        signupForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            // Clear previous error messages ONLY if they are visible
+            if (emailErrorMessage.style.display === 'block') {
+                emailErrorMessage.textContent = '';
+                emailErrorMessage.style.display = 'none';
+            }
+            if (passwordErrorMessage.style.display === 'block') {
+                passwordErrorMessage.textContent = '';
+                passwordErrorMessage.style.display = 'none';
+            }
+            if (cpasswordErrorMessage.style.display === 'block'){
+                cpasswordErrorMessage.textContent = '';
+                cpasswordErrorMessage.style.display = 'none';
+            }
+
+            const formData = new FormData(signupForm);
+            const data = Object.fromEntries(formData.entries());
+
+            const pass = data.password;
+            const cpass = data.cpassword;
+
+            if(pass !== cpass){
+                cpasswordErrorMessage.textContent = "Password does not match";
+                cpasswordErrorMessage.style.display = 'block';
+                return;
+            }
+
+            if(!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}/.test(pass)){
+                passwordErrorMessage.textContent = "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character.";
+                passwordErrorMessage.style.display = 'block';
+                return;
+            }
+
+
+            try {
+                const response = await fetch('/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (response.ok) {
+                    window.location.href = 'login.html';
+                } else if (response.status === 409) {
+                    const errorMessage = await response.text();
+                    emailErrorMessage.textContent = errorMessage;
+                    emailErrorMessage.style.display = 'block';
+                } else {
+                    const errorMessage = await response.text();
+                    alert(`Signup failed: ${errorMessage}`);
+                }
+            } catch (error) {
+                console.error('Error during signup:', error);
+                alert('An error occurred during signup.');
+            }
+        });
+    </script>
+
+</body>
+</html>
