@@ -49,51 +49,58 @@ For Windows:
 
 3. **Open Integrated Terminal:**
 
-   ->bash
+   ```bash
    Ctrl + `
+   ```
 
    Or manually open it from `View -> Terminal`.
 
 4. **Run the Server in VS Code Terminal:**
 
-   ->bash
+   ```bash
    node index.js
+   ```
 
    Or if using `nodemon`:
 
-   ->bash
+   ```bash
    npx nodemon index.js
+   ```
 
 ## 🚀 Installation & Setup
 
 ### **1️⃣ Clone the Repository**
 
-->bash
+```bash
 git clone https://github.com/Sai-git143/Student-Portal.git
 cd Student-Portal
+```
 
 ### **2️⃣ Install Dependencies**
 
-->bash
+```bash
 npm install
+```
 
 ### **3️⃣ Start MongoDB**
 
 Make sure MongoDB is running:
 
-->bash
+```bash
 sudo systemctl start mongod
+```
 
 ### **4️⃣ Run the Server**
 
-->bash
+```bash
 node index.js
+```
 
 Or if using `nodemon`:
 
-->bash
+```bash
 npx nodemon index.js
-
+```
 
 ### **5️⃣ Open in Browser**
 
@@ -102,6 +109,7 @@ npx nodemon index.js
 
 ## 📂 Project Structure
 
+```
 Student-Portal/
 ├── index.js            # Main Server File
 ├── package.json        # Node.js Dependencies
@@ -117,24 +125,27 @@ Student-Portal/
 
 Ensure MongoDB is running:
 
-->bash
+```bash
 sudo systemctl start mongod
-->
+```
 
 ### ❌ bcrypt Not Found
 
-->bash
+```bash
 npm install bcrypt
+```
 
 If bcrypt fails, try:
 
-->bash
+```bash
 npm install bcryptjs
+```
 
 And update your code:
 
-->js
+```js
 const bcrypt = require('bcryptjs');
+```
 
 ## 🎯 Author
 
